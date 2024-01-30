@@ -1,1 +1,78 @@
-# FED
+# FED (File Encryption and Decryption)
+This is a CLI tool for encrypting and decrypting files and folders.
+Be carefull on how you use, irresponsible use can lead user to turning their data into chunks
+if encryption keys are miss-handled.
+For every encrypte file an Encryption key used is save in filename.xml file
+where filename is name of the input file to be encrypted.
+
+## Installation
+
+1. Clone the repository:
+
+   ```shell
+   git clone https://github.com/skye-cyber/FED
+   ```
+
+2. Navigate to the project directory:
+
+   ```shell
+   cd FED
+   ```
+
+3. Install the required dependencies:
+
+   ```shell
+   pip install -r requirements.txt
+   ```
+4.Install the package:
+   ```shell
+   pip install .
+   ```
+
+
+## Usage
+
+To run the CLI app, use the following command:
+
+```shell
+FED [options]
+```
+
+Replace `[options]` with the appropriate command-line options based on the functionality you want to execute.
+
+## Available Options
+`1`.``-m/--mode`` operation to be performed(encryption or Decryption) value ```[encrypt, decrypt]```
+
+`2`.``-i/--input_file``
+
+`3`.``-k/--key`` only when decrypting
+
+## Examples
+
+1. Example command 1:
+
+   ```shell
+   FED -m encrypt -i example.txt or ```FED --mode encrypt -input_file example.txt```
+   ```
+in this case the output file will be 'example.txt.encrypted'
+
+2. Example command 2:
+   ```shell
+   FED -m decrypt -i example.txt.encrypted -k xxxx where xxxx is the encryption key used
+   ```
+2. Example command 3 using key file inplace of the key itself:
+```shell
+    FED -m decrypt -i example.txt.encrypted -k file where file is the file containing the key
+    ```
+
+## Contributing
+
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+This project is an open source software.
+
+
+Feel free to modify and customize this template according to your specific project requirements and add any additional sections or information that you think would be helpful for users.
+
