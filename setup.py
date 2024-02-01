@@ -4,12 +4,12 @@ setup(
     name='FED',
     version='1.0',
     author="Wambua aka skye-cyber",
-    packages=["protect"],
+    packages=["FED"],
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     entry_points={
         'console_scripts': [
-            "protect=main:main"],
+            "FED=FED:main"],
     },
     python_requires='>=3.6',
     install_requires=[
