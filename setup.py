@@ -13,14 +13,15 @@ setup(
     },
     python_requires='>=3.6',
     install_requires=[
-        'argparse'
+        'argparse',
+        'cryptography'
     ],
     include_package_data=True,
     license="MIT",
-    keywords='FED',
+    keywords=['FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography'
+    ],
     classifiers=[
         "Environment :: Console",
-        "Operating System :: POSIX :: Linux",
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python",

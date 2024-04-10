@@ -10,7 +10,7 @@ where filename is name of the input file to be encrypted.
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/skye-cyber/FED
+   git clone https://github.com/skye-cyber/FED.git
    ```
 
 2. Navigate to the project directory:

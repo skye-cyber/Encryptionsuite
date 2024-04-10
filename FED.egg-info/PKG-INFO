@@ -3,9 +3,8 @@ Name: FED
 Version: 1.0
 Author: Wambua aka skye-cyber
 License: MIT
-Keywords: FED
+Keywords: FED,File-encryptor,File-decryptor,encrypt-files,decrypt-files,encrypt,decrypt,cryptography
 Classifier: Environment :: Console
-Classifier: Operating System :: POSIX :: Linux
 Classifier: Natural Language :: English
 Classifier: Operating System :: OS Independent
 Classifier: Programming Language :: Python
@@ -19,6 +18,7 @@ Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: Implementation :: PyPi
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
+License-File: LICENSE
 
 # FED (File Encryption and Decryption)
 This is a CLI tool for encrypting and decrypting files and folders.
@@ -32,7 +32,7 @@ where filename is name of the input file to be encrypted.
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/skye-cyber/FED
+   git clone https://github.com/skye-cyber/FED.git
    ```
 
 2. Navigate to the project directory:
