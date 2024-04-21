@@ -4,21 +4,21 @@ setup(
     name='Encryptionsuite',
     version='1.0.0',
     author="Wambua aka skye-cyber",
-    packages=["FED"],
+    packages=["Encryptionsuite"],
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     entry_points={
         'console_scripts': [
-            "FED=FED:main"],
+            "Encryptionsuite=Encryptionsuite:main"],
     },
-    python_requires='>=3.6',
+    python_requires='>=3.0',
     install_requires=[
         'argparse',
         'cryptography'
     ],
     include_package_data=True,
     license="MIT",
-    keywords=['FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography'
+    keywords=['Encryptionsuite', 'FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography'
     ],
     classifiers=[
         "Environment :: Console",

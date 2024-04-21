@@ -10,7 +10,7 @@ where filename is name of the input file to be encrypted.
 1. Install via pip:
 
    ```shell
-   pip install FED
+   pip install Encryptionsuite
       ```
 2. Install from github:
 
@@ -23,9 +23,9 @@ where filename is name of the input file to be encrypted.
 
 To run the CLI app, use the following command:
 
-```shell
-FED [options]
-```
+ ```shell
+   FED [options]
+ ```
 
 Replace `[options]` with the appropriate command-line options based on the functionality you want to execute.
 

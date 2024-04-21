@@ -3,7 +3,7 @@ Name: Encryptionsuite
 Version: 1.0.0
 Author: Wambua aka skye-cyber
 License: MIT
-Keywords: FED,File-encryptor,File-decryptor,encrypt-files,decrypt-files,encrypt,decrypt,cryptography
+Keywords: Encryptionsuite,FED,File-encryptor,File-decryptor,encrypt-files,decrypt-files,encrypt,decrypt,cryptography
 Classifier: Environment :: Console
 Classifier: Natural Language :: English
 Classifier: Operating System :: OS Independent
@@ -15,7 +15,7 @@ Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
-Requires-Python: >=3.6
+Requires-Python: >=3.0
 Description-Content-Type: text/markdown
 License-File: LICENSE
 
@@ -31,7 +31,7 @@ where filename is name of the input file to be encrypted.
 1. Install via pip:
 
    ```shell
-   pip install FED
+   pip install Encryptionsuite
       ```
 2. Install from github:
 
@@ -44,9 +44,9 @@ where filename is name of the input file to be encrypted.
 
 To run the CLI app, use the following command:
 
-```shell
-FED [options]
-```
+ ```shell
+   FED [options]
+ ```
 
 Replace `[options]` with the appropriate command-line options based on the functionality you want to execute.
 

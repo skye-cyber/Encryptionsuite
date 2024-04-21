@@ -1,2 +1,2 @@
 [console_scripts]
-FED = FED:main
+Encryptionsuite = Encryptionsuite:main
