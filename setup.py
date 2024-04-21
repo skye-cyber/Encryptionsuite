@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='FED',
-    version='1.0',
+    name='Encryptionsuite',
+    version='1.0.0',
     author="Wambua aka skye-cyber",
     packages=["FED"],
     long_description=open('README.md').read(),
@@ -32,6 +32,5 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: Implementation :: PyPi",
     ],
 )

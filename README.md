@@ -7,26 +7,15 @@ where filename is name of the input file to be encrypted.
 
 ## Installation
 
-1. Clone the repository:
+1. Install via pip:
 
    ```shell
-   git clone https://github.com/skye-cyber/FED.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```shell
-   cd FED
-   ```
-
-3. Install the required dependencies:
+   pip install FED
+      ```
+2. Install from github:
 
    ```shell
-   pip install -r requirements.txt
-   ```
-4.Install the package:
-   ```shell
-   pip install .
+   pip install git+https://github.com/skye-cyber/FED.git
    ```
 
 
@@ -61,7 +50,7 @@ in this case the output file will be 'example.txt.encrypted'
    FED -m decrypt -i example.txt.encrypted -k xxxx where xxxx is the encryption key used
    ```
 2. Example command 3 using key file inplace of the key itself:
-```shell
+    ```shell
     FED -m decrypt -i example.txt.encrypted -k file where file is the file containing the key
     ```
 
