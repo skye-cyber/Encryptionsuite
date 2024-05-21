@@ -31,7 +31,8 @@ class ciphers_HandleFiles:
                 # remove/permanently delete input_file
                 subprocess.run(['rm', '-r', f'{self.input_file}'])
 
-            logger.info(f"{self.input_file} encrypted successfully with key=\033[36m{self.passphrase}\033[0m")
+            logger.info(
+                f"{self.input_file} encrypted successfully with key=\033[36m{self.passphrase}\033[0m")
 
             print("\033[1;32mDone\033[0m")
             print(f"File saved as {output_file}")
@@ -96,7 +97,8 @@ class HandleFolders:
                 for file in files:
                     if file.endswith(".enc"):
                         input_file = os.path.join(root, file)
-                        print(f"\033[1;34mDecrypting{input_file}\033[0m", end="\r")
+                        print(
+                            f"\033[1;34mDecrypting{input_file}\033[0m", end="\r")
                         init = HandleFiles(input_file, self.passphrase)
                         init.decrypt_file()
         except KeyboardInterrupt:

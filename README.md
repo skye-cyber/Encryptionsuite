@@ -1,4 +1,4 @@
-# FED (File Encryption and Decryption)
+# Encryptionsuite (File Encryption and Decryption)
 This is a CLI tool for encrypting and decrypting files and folders.
 Be carefull on how you use, irresponsible use can lead user to turning their data into chunks
 if encryption keys are miss-handled.
@@ -15,7 +15,7 @@ where filename is name of the input file to be encrypted.
 2. Install from github:
 
    ```shell
-   pip install git+https://github.com/skye-cyber/FED.git
+   pip install git+https://github.com/skye-cyber/Encryptionsuite.git
    ```
 
 
@@ -24,7 +24,7 @@ where filename is name of the input file to be encrypted.
 To run the CLI app, use the following command:
 
  ```shell
-   FED [options]
+   Encryptionsuite [options]
  ```
 
 Replace `[options]` with the appropriate command-line options based on the functionality you want to execute.
@@ -41,17 +41,17 @@ Replace `[options]` with the appropriate command-line options based on the funct
 1. Example command 1:
 
    ```shell
-   FED -m encrypt -i example.txt or ```FED --mode encrypt -input_file example.txt```
+   Encryptionsuite -m encrypt -i example.txt or ```FED --mode encrypt -input_file example.txt```
    ```
 in this case the output file will be 'example.txt.encrypted'
 
 2. Example command 2:
    ```shell
-   FED -m decrypt -i example.txt.encrypted -k xxxx where xxxx is the encryption key used
+   Encryptionsuite -m decrypt -i example.txt.encrypted -k xxxx where xxxx is the encryption key used
    ```
 2. Example command 3 using key file inplace of the key itself:
     ```shell
-    FED -m decrypt -i example.txt.encrypted -k file where file is the file containing the key
+    Encryptionsuite -m decrypt -i example.txt.encrypted -k file where file is the file containing the key
     ```
 
 ## Contributing

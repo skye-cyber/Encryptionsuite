@@ -55,8 +55,8 @@ def encrypt_file(file_path, ocipher=None):
         # print(f"Comencing encrption process{show_loading_dots()}")
         encrypted_data = cipher.encrypt(data)
 
-        # Append '.encrypted' to the file name
-        enc_file_path = file_path + '.encrypted'
+        # Append '.enc' to the file name
+        enc_file_path = file_path + '.enc'
         # write out encrypted file data to a new file
         with open(enc_file_path, 'wb') as file:
             file.write(encrypted_data)
@@ -127,7 +127,7 @@ def decrypt_file(encrypted_file_path, key):
         decrypted_data = cipher.decrypt(encrypted_data)
 
         # Removing '.encrypted from the file name
-        with open(encrypted_file_path[:-10], 'wb') as file:
+        with open(encrypted_file_path[:-4], 'wb') as file:
             file.write(decrypted_data)
         logger.info(
             f"{encrypted_file_path} decrypted successfully with key=\033[32m{key.decode()}\033[0m")

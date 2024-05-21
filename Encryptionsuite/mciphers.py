@@ -254,8 +254,10 @@ def readfile(fname):
 
 
 def enc_control(file, cipher, key=None):
-    print("\033[1;32mComencing encryption process\033[0m")
-    fname = file + '.enc'
+    # Extract encryption level info from the filename
+    e_level = int(file[-1:]) + 1 if file[-4:-1] == 'enc' else 0
+    fname = f'{file[:-1]}{e_level}' if file[-4:-
+                                            1] == 'enc' else f'{file}.enc{e_level}'
 
     if cipher.lower() == "caesar" or cipher.lower() == "caesarcipher":
         try:
@@ -264,7 +266,7 @@ def enc_control(file, cipher, key=None):
                 logger.info("Call Caesar...")
                 init = CaesarCipher(data)
                 dt = init.encode()
-                print(dt)
+                # print(dt)
                 write2file(dt, fname)
 
             elif os.path.isdir(file):
@@ -274,7 +276,7 @@ def enc_control(file, cipher, key=None):
                     init = CaesarCipher(data)
                     dt = init.encode()
                     write2file(dt, fname)
-                logger.info("\033[1;92mDone")
+                print("\033[1;92mOK")
             else:
                 init = CaesarCipher(file)
                 init.caesar_enc_cipher()
@@ -301,7 +303,7 @@ def enc_control(file, cipher, key=None):
                     init = VigenereCipher(data)
                     init.encrypt()
                     write2file(dt, fname)
-                logger.info("\033[1;92mDone")
+                logger.info("\033[1;92mOK")
             else:
                 init = PlayfairCipher(file, key)
                 init.encrypt()
@@ -340,8 +342,16 @@ def enc_control(file, cipher, key=None):
 
 
 def dec_control(file, cipher, key=None):
-    fname = file[:-4]
-    print("\033[1;32mComencing deryption process\033[0m")
+    # Warn and exit if the file provide is not encrypted
+    if file[-4:-1] != 'enc':
+        print("File does not appear to be encrypted")
+        sys.exit(0)
+
+    # Extract encryption infor from the encrypted file for decide on appropriate file name
+    e_level = int(file[-1:]) - 1 if file[-4:-
+                                         1] == 'enc' and int(file[-1:]) != 0 else ''
+    fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-4]
+
     if cipher.lower() == "caesar" or cipher.lower() == "caesarcipher":
         try:
             if os.path.isfile(file):
@@ -357,7 +367,7 @@ def dec_control(file, cipher, key=None):
                     init = CaesarCipher(data)
                     dt = init.decode()
                     write2file(dt, fname)
-                logger.info("\033[1;92mDone")
+                logger.info("\033[1;92mOK")
             else:
                 init = CaesarCipher(file)
                 init.decode()
@@ -381,7 +391,7 @@ def dec_control(file, cipher, key=None):
                     init = VigenereCipher(data)
                     init.decrypt()
                     write2file(dt, fname)
-                logger.info("\033[1;92mDone")
+                logger.info("\033[1;92mOK")
             else:
                 init = PlayfairCipher(file, key)
                 init.encrypt()
@@ -406,7 +416,7 @@ def dec_control(file, cipher, key=None):
                     data = readfile(file)
                     ct = vc.decrypt(data)
                     write2file(ct, fname)
-                logger.info("\033[1;92mDone")
+                logger.info("\033[1;92mOK")
             else:
                 ct = vc.encrypt(file)
         except KeyboardInterrupt:
