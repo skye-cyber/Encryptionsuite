@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='Encryptionsuite',
+    name='encryptionsuite',
     version='1.0.2',
     author="Wambua aka skye-cyber",
     packages=["Encryptionsuite"],
@@ -9,7 +9,10 @@ setup(
     long_description_content_type='text/markdown',
     entry_points={
         'console_scripts': [
-            "Encryptionsuite=Encryptionsuite:main"],
+            "Encryptionsuite=Encryptionsuite:main",
+            "encryptionsuite=Encryptionsuite:main",
+            "ENCRYPTIONSUITE=Encryptionsuite:main",
+        ],
     },
     python_requires='>=3.0',
     install_requires=[

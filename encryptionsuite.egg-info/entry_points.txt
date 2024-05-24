@@ -1,0 +1,4 @@
+[console_scripts]
+ENCRYPTIONSUITE = Encryptionsuite:main
+Encryptionsuite = Encryptionsuite:main
+encryptionsuite = Encryptionsuite:main

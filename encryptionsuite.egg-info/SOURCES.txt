@@ -37,4 +37,9 @@ Encryptionsuite/__pycache__/mciphers.cpython-311.pyc
 Encryptionsuite/__pycache__/pass_enc_dec.cpython-311.pyc
 Encryptionsuite/__pycache__/try.cpython-311.pyc
 __pycache__/setup.cpython-311.pyc
-dist/Encryptionsuite-1.0.1.tar.gz
+encryptionsuite.egg-info/PKG-INFO
+encryptionsuite.egg-info/SOURCES.txt
+encryptionsuite.egg-info/dependency_links.txt
+encryptionsuite.egg-info/entry_points.txt
+encryptionsuite.egg-info/requires.txt
+encryptionsuite.egg-info/top_level.txt
