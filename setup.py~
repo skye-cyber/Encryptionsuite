@@ -19,7 +19,7 @@ setup(
     include_package_data=True,
     license="MIT",
     keywords=['Encryptionsuite', 'FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography'
-              ],
+    ],
     classifiers=[
         "Environment :: Console",
         "Natural Language :: English",
