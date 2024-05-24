@@ -22,12 +22,13 @@ class HandleFiles:
     # generate encryption key for the file using a passphrase
     @staticmethod
     def generate_enc_key(passphrase):
-        salt = b'salt_'  # Add a salt for added security
+        # Add a salt for added security
+        salt = salt = b'_dfjrf7404dxhdhcbvxzxt2423839e7wxcv(lkhdamet38i839ebncdggdee-/_'
         kdf = PBKDF2HMAC(
-            algorithm=hashes.SHA256(),
+            algorithm=hashes.SHA512(),
             length=32,
             salt=salt,
-            iterations=100000,  # Adjust the number of iterations as needed for security
+            iterations=1_000_000,  # Adjust the number of iterations as needed for security
             backend=default_backend()
         )
         key = base64.urlsafe_b64encode(kdf.derive(passphrase.encode()))
@@ -71,7 +72,7 @@ class HandleFiles:
         except Exception as e:
             logger.error(f"\033[31m{e}\033[0m")
 
-        finally:
+        else:
             _path_ = self.input_file
             if os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}'):
                 print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
@@ -95,7 +96,7 @@ class HandleFiles:
             file = self.input_file
             print("\033[1;35mRestore file name\033[0m")
             e_level = int(file[-1:]) - 1 if file[-4:-
-                                                1] == 'enc' and int(file[-1:]) != 0 else ''
+                                                 1] == 'enc' and int(file[-1:]) != 0 else ''
             fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-5]
             with open(fname, 'wb') as file:
                 file.write(decrypted_data)
@@ -103,16 +104,19 @@ class HandleFiles:
                 # _out_ = f'{self.input_file[:-1]}{int(self.input_file[-1:]) -1}' if int(self.input_file[-1:]) != 0 else f'{self.input_file[:-1]}{int(self.input_file[-1:])}'
 
             logger.info(
-                    f"\033[1m{self.input_file}\033[0m decrypted successfully as \033[1m{fname}\033[0m with key=\033[32m{self.passphrase}\033[0m")
+                f"\033[1m{self.input_file}\033[0m decrypted successfully as \033[1m{fname}\033[0m with key=\033[32m{self.passphrase}\033[0m")
 
         except KeyboardInterrupt:
-            print("\nExiting")
+            print("\nQuit!")
             sys.exit(1)
+
+        except BaseException as e:
+            print(f"\033[91m{e}\033[0m")
 
         except Exception as e:
             print(f"\033[31m{e}\033[0m")
 
-        finally:
+        else:
             _path_ = self.input_file
             if os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}'):
                 print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
@@ -152,7 +156,8 @@ class HandleFolders:
                         init.decrypt_file()
                     input_file = os.path.join(root, file)
                     if os.path.isfile(input_file) and input_file[-4:-1] != "enc":
-                        print(f"\033[1mThe file \033[96m{input_file}\033[0;1m does not appear to be encrypted\033[0m")
+                        print(
+                            f"\033[1mThe file \033[96m{input_file}\033[0;1m does not appear to be encrypted\033[0m")
                         pass
         except KeyboardInterrupt:
             print("\nExiting")
