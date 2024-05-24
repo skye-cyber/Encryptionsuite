@@ -8,7 +8,7 @@ where filename is name of the input file to be encrypted.
 ```shell
    Encryptionsuite -h
    encryptionsuite -h
-   ENCRYPTIONSUITE -h
+   ENCRYPTIONSUITE
 ```
 ## Installation
 
