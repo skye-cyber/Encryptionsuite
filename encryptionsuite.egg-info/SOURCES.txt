@@ -1,5 +1,7 @@
+.setup.py.kate-swp
 LICENSE
 README.md
+README.md~
 setup.py
 setup.py~
 Encryptionsuite/.main.py.kate-swp

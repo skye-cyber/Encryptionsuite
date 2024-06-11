@@ -25,7 +25,12 @@ Be carefull on how you use, irresponsible use can lead user to turning their dat
 if encryption keys are miss-handled.
 For every encrypte file an Encryption key used is save in filename.xml file
 where filename is name of the input file to be encrypted.
-
+## Name variations
+```shell
+   Encryptionsuite -h
+   encryptionsuite -h
+   ENCRYPTIONSUITE -h
+```
 ## Installation
 
 1. Install via pip:

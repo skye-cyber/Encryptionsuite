@@ -263,7 +263,7 @@ def enc_control(file, cipher, key=None):
         try:
             if os.path.isfile(file):
                 data = readfile(file)
-                logger.info("Call Caesar...")
+                # logger.info("Call Caesar...")
                 init = CaesarCipher(data)
                 dt = init.encode()
                 # print(dt)
@@ -350,7 +350,7 @@ def dec_control(file, cipher, key=None):
     # Extract encryption infor from the encrypted file for decide on appropriate file name
     e_level = int(file[-1:]) - 1 if file[-4:-
                                          1] == 'enc' and int(file[-1:]) != 0 else ''
-    fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-4]
+    fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-5]
 
     if cipher.lower() == "caesar" or cipher.lower() == "caesarcipher":
         try:

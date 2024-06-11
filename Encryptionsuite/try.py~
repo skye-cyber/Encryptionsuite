@@ -165,7 +165,7 @@ def _dec_control_(_input_):
 
 
 if __name__ == "__main__":
-    ms = "/home/skye/Documents/draft/output/Resume_ng.txt.enc0"
+    ms = "/home/skye/Documents/draft/output/Resume_ng.txt.enc"
     _dec_control_(ms)
     '''choice = int(input("\033[93mencode/decode (1 or 2)??\033[0m:"))
     message = input("Enter your message:")
