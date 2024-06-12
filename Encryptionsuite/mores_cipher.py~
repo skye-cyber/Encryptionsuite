@@ -2,7 +2,7 @@ import os
 from .ciphers import CaesarCipher
 
 
-mapping = {"\\": "✴️"
+mapping = {"\\": "✴️", git
            "/": "❇️",
            ".": "⏹️",
            "A": ".",
