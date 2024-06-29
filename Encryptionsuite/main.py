@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)-8s %(message)s')
 logger = logging.getLogger(__name__)
 
 
-def clean(input_file):
+def clean_Encfile(input_file):
     _orig_ = input_file
     for i in range(int(input_file[-1:]), -1, -1):
         file = f'{input_file[:-1]}{i}'
@@ -24,7 +24,7 @@ def clean(input_file):
             break
 
 
-def _clean_(input_file):
+def _clean_Origfile_(input_file):
     _orig_ = input_file
     for i in range(int(input_file[-1:])):
         file = f'{input_file[:-1]}{i}'
@@ -60,8 +60,8 @@ def _clean_dir_(gdir, mode):
 
     except Exception as e:
         print(f"\033[31m{e}\033[0m")
-    finally:
-        print("\033[92mSucceed✅\033[0m")
+    # finally:
+    # print("\033[92mSucceed✅\033[0m")
 
 
 def get_keys(pf):
@@ -125,7 +125,7 @@ password list for decryptiona and encryption""")
         sys.exit(0)
     # Handle file/folder encryption
     if args.mode == 'encrypt':
-        print("\033[1;92mComencing encryption process\033[0m")
+        logger.info("\033[1;32m======START@Deryption======\033[0m")
         # Handle cipher choices
         if args.cipher:
             # mores_cypher does not require password
@@ -145,7 +145,7 @@ password list for decryptiona and encryption""")
 
                 args.passphrase = None
                 args.random_key = None
-                enc_control(input_file, args.cipher, args.passphrase)
+                enc_control(input_file, cipher, passphrase)
 
             if args.pass_list:
                 pass_ls = get_keys(args.pass_list) if os.path.exists(
@@ -160,9 +160,11 @@ password list for decryptiona and encryption""")
                     e_level += 1
 
                 # Clean intermediary files
-                _clean_(input_file)
+                _clean_Origfile_(input_file)
 
             elif args.passphrase:
+                logger.info(
+                    f"\033[1m@key=\033[30m{passphrase}\033[0m")
                 enc_control(input_file, args.cipher, args.passphrase)
 
         # Handle if passphrase or a password list file is provided
@@ -180,7 +182,7 @@ password list for decryptiona and encryption""")
                     e_level += 1
 
                 # Clean intermediary files
-                _clean_(input_file)
+                _clean_Origfile_(input_file)
 
             elif args.passphrase:
                 init = HandleFiles(args.input_file, args.passphrase)
@@ -201,15 +203,17 @@ password list for decryptiona and encryption""")
                         e_level += 1
 
                     # Clean intermediary files
-                    _clean_(input_file)
+                    _clean_Origfile_(input_file)
 
                 elif args.passphrase:
+                    logger.info(
+                        f"\033[1m@key lenth=\033[30m{len(passphrase)}\033[0m")
                     init = HandleFolders(input_file, args.passphrase)
                     init.encrypt_folder()
 
             finally:
                 # Clean original files from the directory
-                print("\033[33mClean\033[0m")
+                # print("\033[33mClean\033[0m")
                 _clean_dir_(input_file, False)
 
         # Handle case where encryption passphrase is not provided
@@ -231,16 +235,18 @@ password list for decryptiona and encryption""")
             print("\033[1mThe file doesn not appear to be encrypted\033[0m")
             sys.exit(0)
 
-        print("\033[1;32mComencing deryption process\033[0m")
+        logger.info("\033[1;32m======START@Deryption======\033[0m")
 
         # Handle cipher choices
         if args.cipher:
 
             if args.cipher.lower() in list(_more_):
                 _dec_control_(input_file)
-            # Since caesar cipher needs no passphrase, ommit it
-            if args.cipher.lower() in list(_caesar_):
 
+            # Since caesar cipher needs no passphrase, ommit it
+            elif args.cipher.lower() in list(_caesar_):
+
+                # Caesar cipher accepts no pass list so prompt to continue without it
                 if args.pass_list:
                     print(
                         "\033[91mOops☠️ caesar cipher accepts no password list\033[0m")
@@ -249,10 +255,12 @@ password list for decryptiona and encryption""")
                         sys.exit()
                     else:
                         pass
-                args.passphrase = None
+
+                passphrase = None
                 args.random_key = None
-                dec_control(input_file, args.cipher, args.passphrase)
-            if args.pass_list:
+                logger.info(f"\033[1m@key=\033[30m{passphrase}\033[0m")
+                dec_control(input_file, cipher, passphrase)
+            elif args.pass_list:
                 pass_ls = get_keys(args.pass_list) if os.path.exists(
                     args.pass_list) else list(args.pass_list)
                 e_level = int(input_file[-1:])
@@ -265,17 +273,21 @@ password list for decryptiona and encryption""")
                     sys.exit(1)
 
                 for pass_key in reversed(pass_ls):
+                    logger.info(
+                        f"\033[1m@key=\033[30m{pass_key}\033[0m")
                     dec_control(input_file,
                                 args.cipher, pass_key)
                     input_file = f'{input_file[:-1]}'f'{e_level - 1}'
 
                 # Clean intermediary files
-                clean(input_file)
+                clean_Encfile(input_file)
 
-            elif args.passphrase:
+            elif passphrase:
+                logger.info(
+                    f"\033[1m@key=\033[30m{passphrase}\033[0m")
                 dec_control(input_file, args.cipher, args.passphrase)
 
-        # Handle if passphrase is provided
+        # Handle case where no cipher is selcted and passphrase/password is provided
         if os.path.isfile(input_file) and (args.passphrase or args.pass_list):
 
             if args.pass_list:
@@ -291,14 +303,18 @@ password list for decryptiona and encryption""")
                     sys.exit(1)
 
                 for pass_key in reversed(pass_ls):
+                    logger.info(
+                        f"\033[1m@key=\033[30m{pass_key}\033[0m")
                     init = HandleFiles(input_file, pass_key)
                     init.decrypt_file()
                     input_file = f'{input_file[:-1]}'f'{e_level - 1}'
 
                 # Clean intermediary files
-                clean(input_file)
+                clean_Encfile(input_file)
 
             elif args.passphrase:
+                logger.info(
+                    f"\033[1m@key=\033[30m{passphrase}\033[0m")
                 init = HandleFiles(input_file, args.passphrase)
                 init.decrypt_file()
 
@@ -318,20 +334,24 @@ password list for decryptiona and encryption""")
                         sys.exit(1)
 
                     for pass_key in reversed(pass_ls):
+                        logger.info(
+                            f"\033[1m@key=\033[30m{pass_key}\033[0m")
                         init = HandleFolders(input_file, pass_key)
                         init.decrypt_folder()
                         input_file = f'{input_file[:-1]}'f'{e_level - 1}'
 
                     # Clean intermediary files
-                    clean(input_file)
+                    clean_Encfile(input_file)
 
                 elif args.passphrase:
+                    logger.info(
+                        f"\033[1m@key=\033[30m{passphrase}\033[0m")
                     init = HandleFolders(input_file, args.passphrase)
                     init.decrypt_folder()
 
             finally:
                 # Clean original enc files from the directory
-                print("\033[33mClean\033[0m")
+                # print("\033[33mClean\033[0m")
                 _clean_dir_(input_file, True)
 
         # Handle case where decryption passphrase is not provided
@@ -345,7 +365,7 @@ password list for decryptiona and encryption""")
         elif not args.random_key and not args.passphrase and not args.cipher:
             print("A decryption passphrase is needed otherwise pass command with '--Rk' or '--cipher' flag to search for encryption key in default key file")
 
-        logger.info("\033[1;92mDone")
+        logger.info("\033[1;92m======END======")
 
 
 if __name__ == "__main__":

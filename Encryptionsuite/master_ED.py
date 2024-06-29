@@ -35,7 +35,9 @@ class HandleFiles:
         return key
 
     # function to read and encrypt the file
-    def encrypt_file(self):
+    def encrypt_file(self, status: bool = True):
+        _path_ = self.input_file
+        # logger.info(f"\033[1m@key=\033[30m{self.passphrase}\033[0m")
         try:
 
             # open the file for encryption
@@ -61,7 +63,7 @@ class HandleFiles:
                 # subprocess.run(['rm', '-r', f'{self.input_file}'])
 
             logger.info(
-                f"\033[1m{self.input_file}\033[0m encrypted successfully with key=\033[36m{self.passphrase}\033[0m")
+                f"\033[1m{self.input_file}\033[0m encrypted successfully")
 
             print(f"File saved as {output_file}")
 
@@ -71,16 +73,19 @@ class HandleFiles:
 
         except Exception as e:
             logger.error(f"\033[31m{e}\033[0m")
+        if not (os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}')):
+            if status is True:
+                print("\033[31mEncryption failure.\033[0m")
 
-        else:
-            _path_ = self.input_file
-            if os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}'):
-                print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
-                os.remove(_path_)
+        elif os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}'):
+            print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
+            os.remove(_path_)
 
         return output_file
 
-    def decrypt_file(self):
+    def decrypt_file(self, status: bool = True):
+        _path_ = self.input_file
+
         try:
             # Ensure the key is of type bytes
             key = HandleFiles.generate_enc_key(self.passphrase)
@@ -104,7 +109,7 @@ class HandleFiles:
                 # _out_ = f'{self.input_file[:-1]}{int(self.input_file[-1:]) -1}' if int(self.input_file[-1:]) != 0 else f'{self.input_file[:-1]}{int(self.input_file[-1:])}'
 
             logger.info(
-                f"\033[1m{self.input_file}\033[0m decrypted successfully as \033[1m{fname}\033[0m with key=\033[32m{self.passphrase}\033[0m")
+                f"\033[1m File Decrypted successfully as \033[1m{fname}\033[0m")
 
         except KeyboardInterrupt:
             print("\nQuit!")
@@ -115,12 +120,13 @@ class HandleFiles:
 
         except Exception as e:
             print(f"\033[31m{e}\033[0m")
+        if not (os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}')):
+            if status is True:
+                print("\033[31mDecryption failure.\033[0m\n")
 
-        else:
-            _path_ = self.input_file
-            if os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}'):
-                print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
-                os.remove(_path_)
+        elif os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}'):
+            print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
+            os.remove(_path_)
 
 
 class HandleFolders:
@@ -134,7 +140,7 @@ class HandleFolders:
             for root, dirs, files in os.walk(self.folder):
                 for file in files:
                     input_file = os.path.join(root, file)
-                    print(f"\033[1;34mEncrypting{input_file}\033[0m")
+                    print(f"\033[1;34mEncrypting\033[95m{file}\033[0m")
                     init = HandleFiles(input_file, self.passphrase)
                     init.encrypt_file()
         except KeyboardInterrupt:
@@ -151,7 +157,7 @@ class HandleFolders:
                     if file[-4:-1] == "enc":
                         input_file = os.path.join(root, file)
                         print(
-                            f"\033[1;34mDecrypting{input_file}\033[0m")
+                            f"\033[1;34mDecrypting \033[95m{file}\033[0m", end='')
                         init = HandleFiles(input_file, self.passphrase)
                         init.decrypt_file()
                     input_file = os.path.join(root, file)
