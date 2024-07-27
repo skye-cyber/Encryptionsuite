@@ -1,4 +1,4 @@
-from colors import (DYELLOW, DMAGENTA, DBLUE, BBYELLOW, BBCYAN, RESET)
+from colors import (DYELLOW, DMAGENTA DBLUE, BBYELLOW, BBCYAN, RESET)
 
 
 def _banner_():

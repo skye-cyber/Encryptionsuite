@@ -70,7 +70,7 @@ class HandleFiles:
             sys.exit(1)
 
         except Exception as e:
-            print(f"\033[31m{e}\033[0m",end='\r')
+            print(f"\033[31m{e}\033[0m")
         if os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}'):
             if status is True:
                 print("\033[31mDecryption failure.\033[0m\n")
@@ -78,44 +78,3 @@ class HandleFiles:
         elif os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}'):
             print(f"\033[2;35mDelete \033[1m{_path_}🚮\033[0m")
             os.remove(_path_)
-
-
-class Bruteforce:
-    def __init__(self, obj, dict_file):
-        self.obj = obj
-        self.dict_file = dict_file
-
-    def conservative(self):
-        # Critical redundacy
-        # Goal:-> Is to avoid loosing the original files by Creating temporary directory to store temporary files
-        if os.path.isfile(self.obj):
-            _file = os.path.split(self.obj)[-1]
-            _path = os.path.dirname(self.obj)
-            _dir = os.path.join(_path, "CRDIR")
-            # Create temporary directory
-            if not os.path.exists(_dir):
-                os.mkdir(_dir)
-            cmd = f"cp {self.obj} {_dir}"
-            os.system(cmd)
-            # Call file bruteforce function function
-            _fpath = os.path.join(_dir, _file)
-
-            # Open dictionary file for Bruteforce
-            with open(self.dict_file, 'r') as df:
-                passw = df.readlines()
-            # passw = list(passw)
-            # pass_ls = ['hello', "pass", "password", "passrr", "hhhh"]
-            try:
-                for key in passw:
-                    # key = key.strip('\n'
-                    print(f"\033[1;30m{key}\033[0m", end='\r')
-                    # Create decryption object
-                    init = HandleFiles(_fpath, key)
-                    init.decrypt_file(False)
-            except BaseException as e:
-                print(e)
-
-
-init = Bruteforce("/home/skye/Documents/AReport.docx.enc0",
-                  "/home/skye/Documents/john.lst")
-init.conservative()
