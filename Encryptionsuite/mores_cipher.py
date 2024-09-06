@@ -152,7 +152,7 @@ def _dec_control_(_input_):
         fname = f'{_input_[:-1]}{e_level}' if e_level != '' else _input_[:-5]
         with open(fname, 'w') as f:
             f.write(data)
-        print(f"{BWHITE}File saved as{fname}")
+        print(f"{BWHITE}File saved as {fname}")
 
     except KeyboardInterrupt:
         print("\nQuit❕")

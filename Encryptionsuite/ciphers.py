@@ -236,7 +236,7 @@ def write2file(dt, fname):
             f.write(dt)
             logger.info("\033[92mOk\033[0m")
     except FileExistsError:
-        print("\033[1;92mFound existing file with similar name \033[0m")
+        print("\033[1;91mFound existing file with similar name \033[0m")
         sys.exit(1)
 
 
@@ -247,9 +247,11 @@ def readfile(fname):
             data = f.read()
             logger.info("\033[92mOk\033[0m")
             # print(data)
-    except FileExistsError:
-        print("\033[1;92mFile Not Found\033[0m")
+    except FileNotFoundError:
+        print("\033[1;91mFile Not Found\033[0m")
         sys.exit(1)
+    except Exception as e:
+        logger.critical(f"\033[1;91m{e}\033[0m")
     return data
 
 

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='encryptionsuite',
-    version='1.0.3',
+    version='1.0.4',
     author="Wambua aka skye-cyber",
     packages=["Encryptionsuite"],
     long_description=open('README.md').read(),

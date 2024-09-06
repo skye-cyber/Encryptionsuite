@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 from .colors import (BWHITE, DMAGENTA, FMAGENTA, MAGENTA, RED,
-                     RESET, DBLUE, CGREEN, CYAN, DCYAN, CGREEN)
+                     RESET, DBLUE, CYAN, DCYAN, CGREEN)
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)-8s %(message)s')
 logger = logging.getLogger(__name__)
@@ -37,6 +37,9 @@ class HandleFiles:
                 backend=default_backend()
             )
             key = base64.urlsafe_b64encode(kdf.derive(passphrase.encode()))
+
+            with open(file, 'r') as f:
+                f.write(key)
             return key
         except Exception as e:
             print(f"{RED}{e}{RESET}")
@@ -109,7 +112,7 @@ class HandleFiles:
             # Extract encryption infor from the encrypted file for decide on appropriate file name
             file = self.input_file
 
-            print(f"{DC}Restore file name{RESET}")
+            print(f"{DCYAN}Restore file name{RESET}")
 
             e_level = int(file[-1:]) - 1 if file[-4:-
                                                  1] == 'enc' and int(file[-1:]) != 0 else ''

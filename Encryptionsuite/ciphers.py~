@@ -236,7 +236,7 @@ def write2file(dt, fname):
             f.write(dt)
             logger.info("\033[92mOk\033[0m")
     except FileExistsError:
-        print("\033[1;92mFound existing file with similar name \033[0m")
+        print("\033[1;91mFound existing file with similar name \033[0m")
         sys.exit(1)
 
 
@@ -247,9 +247,12 @@ def readfile(fname):
             data = f.read()
             logger.info("\033[92mOk\033[0m")
             # print(data)
-    except FileExistsError:
-        print("\033[1;92mFile Not Found\033[0m")
+    except FileNotFoundError:
+        print("\033[1;91mFile Not Found\033[0m")
         sys.exit(1)
+    except r
+    except Exception as e:
+        logger.critical(f"\033[1;91m{e}\033[0m")
     return data
 
 
@@ -350,7 +353,7 @@ def dec_control(file, cipher, key=None):
     # Extract encryption infor from the encrypted file for decide on appropriate file name
     e_level = int(file[-1:]) - 1 if file[-4:-
                                          1] == 'enc' and int(file[-1:]) != 0 else ''
-    fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-4]
+    fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-5]
 
     if cipher.lower() == "caesar" or cipher.lower() == "caesarcipher":
         try:
