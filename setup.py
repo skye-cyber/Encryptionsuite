@@ -1,9 +1,13 @@
 from setuptools import setup
 
+DESCRIPTION = "CLI tool for encrypting and decrypting files and folders"
+EXCLUDE_FROM_PACKAGES = ["build", "dist", "test", "src"]
+
 setup(
     name='encryptionsuite',
-    version='1.0.4',
+    version='1.0.5B',
     author="Wambua aka skye-cyber",
+    email="swskye17@gmail.com",
     packages=["Encryptionsuite"],
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -19,6 +23,7 @@ setup(
         'argparse',
         'cryptography'
     ],
+
     include_package_data=True,
     license="MIT",
     keywords=['Encryptionsuite', 'FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography'
