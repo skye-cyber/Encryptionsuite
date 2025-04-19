@@ -75,3 +75,10 @@ This project is an open source software Licensed under `GNU GENERAL PUBLIC LICEN
 
 Feel free to modify and customize this template according to your specific project requirements and add any additional sections or information that you think would be helpful for users.
 
+
+
+## Acknowledgements
+
+[Shields.io](https://shields.io/) – Status badges 
+
+GitHub’s README guidelines 
