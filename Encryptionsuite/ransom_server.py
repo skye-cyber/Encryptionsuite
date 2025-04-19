@@ -5,7 +5,7 @@ import base64
 import datetime
 import socket
 import subprocess
-from threading import Lock, Thread
+# from threading import Lock, Thread
 
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
@@ -85,7 +85,8 @@ def main():
             EchoClientHandler(clientSocket, addr)
             '''client_handler = Thread(
                 target=EchoClientHandler, args=(clientSocket, addr))
-            client_handler.start()'''
+            client_handler.start()
+        client_handler.join()'''
 
     except socket.gaierror as e:
         print(f"[-] Socket error: {e}")

@@ -6,7 +6,7 @@ import os
 from cryptography.fernet import Fernet
 
 # Set the base directory depending on the operating system
-base = "c:\\" if os.name == 'nt' else "/root"
+base = "C:\\" if os.name == 'nt' else "/root"
 
 # Read the encryption key from the provided file location
 with open(input("Enter your key file location: "), 'rb') as fl:

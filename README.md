@@ -65,7 +65,7 @@ Contributions are welcome! If you encounter any issues or have suggestions for i
 
 ## License
 
-This project is an open source software.
+This project is an open source software Licensed under `GNU GENERAL PUBLIC LICENSE Version 3`
 
 
 Feel free to modify and customize this template according to your specific project requirements and add any additional sections or information that you think would be helpful for users.

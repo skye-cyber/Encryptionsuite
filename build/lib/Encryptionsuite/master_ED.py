@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 from .colors import (BWHITE, DMAGENTA, FMAGENTA, MAGENTA, RED,
-                     RESET, DBLUE, CYAN, DCYAN, CGREEN)
+                     RESET, DBLUE, CGREEN, CYAN, DCYAN, CGREEN)
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)-8s %(message)s')
 logger = logging.getLogger(__name__)

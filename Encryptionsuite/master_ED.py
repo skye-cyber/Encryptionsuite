@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 from .colors import (BWHITE, DMAGENTA, FMAGENTA, MAGENTA, RED,
-                     RESET, DBLUE, CGREEN, CYAN, DCYAN, CGREEN)
+                     RESET, DBLUE, CGREEN, CYAN, DCYAN)
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)-8s %(message)s')
 logger = logging.getLogger(__name__)
@@ -44,7 +44,6 @@ class HandleFiles:
     # function to read and encrypt the file
     def encrypt_file(self, status: bool = True):
         _path_ = self.input_file
-        # logger.info(f"{BWHITE}@key=\033[30m{self.passphrase}{RESET}")
         try:
 
             # open the file for encryption
@@ -66,11 +65,6 @@ class HandleFiles:
             # write out encrypted file data to a new file
             with open(output_file, 'wb') as file:
                 file.write(encrypted_data)
-
-                # remove/permanently delete input_file
-                # subprocess.run(['rm', '-r', f'{self.input_file}'])
-
-            # logger.info(f"{BWHITE}{self.input_file}{RESET} encrypted successfully")
 
             print(f"{CGREEN}Saved as{RESET} {output_file}")
             status = False

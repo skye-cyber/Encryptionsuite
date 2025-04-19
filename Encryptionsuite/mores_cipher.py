@@ -1,8 +1,8 @@
 import os
-
+import sys
 from .ciphers import CaesarCipher
 from .colors import (BWHITE, CGREEN, FMAGENTA,
-                     RED, RESET, YELLOW, FBLUE)
+                     RED, RESET, YELLOW, FYELLOW, FBLUE)
 
 mapping = {"\\": "✴️",
            "/": "❇️",
@@ -94,9 +94,16 @@ def _enc_control_(input_file):
     try:
         if os.path.isfile(input_file):
             f = True
-            # Open and read file data
-            with open(input_file, 'r') as f:
-                data = f.read()
+            try:
+                # Open and read file data
+                with open(input_file, 'r') as f:
+                    data = f.read()
+            except UnicodeDecodeError:
+                print(f"{FYELLOW}Warning: {YELLOW}Invalid binary file, can only handle text files{RESET}")
+            except EOFError:
+                print(f"{RED}Unexpected end of file _EOF_{RESET}")
+            except Exception as e:
+                print(f"{RED}{e}{RESET}")
         else:
             data = mapv
             f = False
@@ -111,13 +118,6 @@ def _enc_control_(input_file):
         _out_fname_ = f'{file[:-1]}{e_level}' if file[-4:-
                                                       1] == 'enc' else f'{file}.enc{e_level}'
 
-    except KeyboardInterrupt:
-        print("\nQuit❕")
-    except FileExistsError as e:
-        print(f"{RED}{e}{RESET}")
-    except Exception as e:
-        print(f"{RED}{e}{RESET}")
-    finally:
         # Write the encrypted data to file
         with open(_out_fname_, 'w') as f:
             f.write(data)
@@ -128,7 +128,20 @@ def _enc_control_(input_file):
         if os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}'):
             print(f"{FMAGENTA}Delete {BWHITE}{_path_}🚮{RESET}")
             os.remove(_path_)
-    return _out_fname_
+
+        return _out_fname_
+
+    except UnboundLocalError:
+        print(f"{RED}File was not read correctly{RESET}")
+        sys.exit(0)
+    except SystemExit:
+        pass
+    except KeyboardInterrupt:
+        print("\nQuit❕")
+    except FileExistsError as e:
+        print(f"{RED}{e}{RESET}")
+    except Exception as e:
+        print(f"{RED}{e}{RESET}")
 
 
 def _dec_control_(_input_):
@@ -154,6 +167,8 @@ def _dec_control_(_input_):
             f.write(data)
         print(f"{BWHITE}File saved as {fname}")
 
+    except UnboundLocalError:
+        print(f"{RED}File was not read correctly{RESET}")
     except KeyboardInterrupt:
         print("\nQuit❕")
     except FileExistsError as e:

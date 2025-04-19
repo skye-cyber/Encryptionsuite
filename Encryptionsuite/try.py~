@@ -1,5 +1,0 @@
-import os
-_dir = "/home/skye/Desktop/CRDIR"
-if os.path.exists(_dir) and len(os.listdir(_dir)) == 0:
-    print("True")
-    os.rmdir(_dir)

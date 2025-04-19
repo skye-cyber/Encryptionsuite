@@ -1,0 +1,6 @@
+*~
+dist/*
+src/*
+build/*
+**/*/__pycache__/**/*
+*gz

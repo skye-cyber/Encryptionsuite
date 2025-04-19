@@ -5,7 +5,7 @@ EXCLUDE_FROM_PACKAGES = ["build", "dist", "test", "src"]
 
 setup(
     name='encryptionsuite',
-    version='1.0.5B',
+    version='1.0.6',
     author="Wambua aka skye-cyber",
     email="swskye17@gmail.com",
     packages=["Encryptionsuite"],
@@ -25,8 +25,8 @@ setup(
     ],
 
     include_package_data=True,
-    license="MIT",
-    keywords=['Encryptionsuite', 'FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography'
+    license="GNU v3",
+    keywords=['Encryptionsuite', 'FED', 'File-encryptor', 'File-decryptor', 'encrypt-files', 'decrypt-files', 'encrypt', 'decrypt', 'cryptography', 'ciphers'
               ],
     classifiers=[
         "Environment :: Console",
@@ -39,6 +39,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.11",
     ],
 )
