@@ -4,3 +4,5 @@ src/*
 build/*
 **/*/__pycache__/**/*
 *gz
+*.egg-info
+
