@@ -1,3 +1,8 @@
+[![PyPI Version](https://img.shields.io/pypi/v/Encryptionsuite)](https://pypi.org/project/Encryptionsuite)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/skye-cyber/Encryptionsuite/ci.yml?branch=main)](https://github.com/skye-cyber/Encryptionsuite/actions)
+
 # Encryptionsuite (File Encryption and Decryption)
 This is a CLI tool for encrypting and decrypting files and folders.
 Be carefull on how you use, irresponsible use can lead user to turning their data into chunks
