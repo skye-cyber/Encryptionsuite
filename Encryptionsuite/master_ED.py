@@ -1,4 +1,5 @@
 import base64
+
 # import subprocess
 import logging
 import logging.handlers
@@ -10,15 +11,24 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-from .colors import (BWHITE, DMAGENTA, FMAGENTA, MAGENTA, RED,
-                     RESET, DBLUE, CGREEN, CYAN, DCYAN)
+from .colors import (
+    BWHITE,
+    DMAGENTA,
+    FMAGENTA,
+    MAGENTA,
+    RED,
+    RESET,
+    DBLUE,
+    CGREEN,
+    CYAN,
+    DCYAN,
+)
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)-8s %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
 logger = logging.getLogger(__name__)
 
 
 class HandleFiles:
-
     def __init__(self, input_file, passphrase):
         self.input_file = input_file
         self.passphrase = passphrase
@@ -28,13 +38,15 @@ class HandleFiles:
     def generate_enc_key(passphrase):
         try:
             # Add a salt for added security
-            salt = salt = b'_dfjrf7404dxhdhcbvxzxt2423839e7wxcv(lkhdamet38i839ebncdggdee-/_'
+            salt = salt = (
+                b"_dfjrf7404dxhdhcbvxzxt2423839e7wxcv(lkhdamet38i839ebncdggdee-/_"
+            )
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA512(),
                 length=32,
                 salt=salt,
                 iterations=1_000_000,  # Adjust the number of iterations as needed for security
-                backend=default_backend()
+                backend=default_backend(),
             )
             key = base64.urlsafe_b64encode(kdf.derive(passphrase.encode()))
             return key
@@ -42,28 +54,46 @@ class HandleFiles:
             print(f"{RED}{e}{RESET}")
 
     # function to read and encrypt the file
-    def encrypt_file(self, status: bool = True):
-        _path_ = self.input_file
-        try:
+    def levelOkay(self, path):
+        level = path[-1:]
 
-            # open the file for encryption
-            with open(self.input_file, 'rb') as file:
+        if level.isdigit() and int(level) >= 3 and path[:-1].endswith(".enc"):
+            sys.exit(f"{RED}Reached maximum encryption levels{RESET}")
+
+    def encrypt_file(self, status: bool = True):
+        original_path = self.input_file
+        self.levelOkay(original_path)
+
+        try:
+            # Read original file
+            with open(original_path, "rb") as file:
                 data = file.read()
 
+            # Generate key and encrypt
             key = HandleFiles.generate_enc_key(self.passphrase)
             cipher = Fernet(key)
             encrypted_data = cipher.encrypt(data)
 
-            # Append '.enc{e_level}' to the file name
-            print(F"{DMAGENTA}Modifying file name{RESET}")
+            # Determine encryption level
+            filename = os.path.basename(original_path)
+            dirname = os.path.dirname(original_path)
 
-            file = self.input_file
-            e_level = int(file[-1:]) + 1 if file[-4:-1] == 'enc' else 0
-            output_file = f'{file[:-1]}{e_level}' if file[-4:-
-                                                          1] == 'enc' else f'{file}.enc{e_level}'
+            if filename.endswith(".enc") and filename[-5:-4].isdigit():
+                level = int(filename[-5:-4])  # .enc0, .enc1
+                base_name = filename[:-5]
+            elif filename[-1:].isdigit() and filename[-6:-3] == ".enc":
+                level = int(filename[-1:])
+                base_name = filename[:-6]
+            else:
+                level = -1
+                base_name = filename
 
-            # write out encrypted file data to a new file
-            with open(output_file, 'wb') as file:
+            new_level = level + 1
+            output_filename = f"{base_name}.enc{new_level}"
+            output_file = os.path.join(dirname, output_filename)
+
+            # Write encrypted file
+            with open(output_file, "wb") as file:
                 file.write(encrypted_data)
 
             print(f"{CGREEN}Saved as{RESET} {output_file}")
@@ -77,64 +107,87 @@ class HandleFiles:
             logger.error(f"{BWHITE}{e}{RESET}")
             sys.exit(1)
 
-        if status is True and (not os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}')):
-            print(f"{RED}Encryption failure.{RESET}")
-
-        elif status is False and (os.path.exists(_path_ + f'.enc{0}') or os.path.exists(_path_ + f'.enc{1}')):
-            print(f"{FMAGENTA}Delete {BWHITE}{_path_}🚮{RESET}")
-            os.remove(_path_)
+        self.encCleanup(original_path, status)
 
         return output_file
 
+    def encCleanup(self, original_path, status):
+        # Cleanup logic after encryption
+        if not status:
+            try:
+                os.remove(original_path)
+                print(f"{FMAGENTA}Deleted original: {BWHITE}{original_path} 🚮{RESET}")
+            except Exception as e:
+                logger.warning(f"Could not delete {original_path}: {e}")
+        else:
+            print(f"{RED}Encryption failure.{RESET}")
+
     def decrypt_file(self, status: bool = True):
-        _path_ = self.input_file
+        encrypted_path = self.input_file
 
         try:
-            # Ensure the key is of type bytes
+            # Generate key and decryptor
             key = HandleFiles.generate_enc_key(self.passphrase)
             cipher = Fernet(key)
 
-            # open the file for decryption
-            with open(self.input_file, 'rb') as file:
+            # Read encrypted file
+            with open(encrypted_path, "rb") as file:
                 encrypted_data = file.read()
 
             decrypted_data = cipher.decrypt(encrypted_data)
 
-            # Extract encryption infor from the encrypted file for decide on appropriate file name
-            file = self.input_file
+            print(f"{DCYAN}Restoring file name...{RESET}")
 
-            print(f"{DCYAN}Restore file name{RESET}")
+            # Determine decryption level
+            filename = os.path.basename(encrypted_path)
+            dirname = os.path.dirname(encrypted_path)
 
-            e_level = int(file[-1:]) - 1 if file[-4:-
-                                                 1] == 'enc' and int(file[-1:]) != 0 else ''
-            fname = f'{file[:-1]}{e_level}' if e_level != '' else file[:-5]
+            # Match pattern: filename.ext.encN
+            if filename[-1:].isdigit() and filename[-5:-1] == ".enc":
+                level = int(filename[-1:])
+                base_name = filename[:-6]
+            else:
+                print(f"{RED}Invalid encrypted file name format.{RESET}")
+                return None
 
-            with open(fname, 'wb') as file:
+            # Decide output file name
+            if level > 0:
+                output_filename = f"{base_name}.enc{level - 1}"
+            else:
+                output_filename = base_name
+
+            output_file = os.path.join(dirname, output_filename)
+
+            # Write decrypted data
+            with open(output_file, "wb") as file:
                 file.write(decrypted_data)
 
-                # _out_ = f'{self.input_file[:-1]}{int(self.input_file[-1:]) -1}' if int(self.input_file[-1:]) != 0 else f'{self.input_file[:-1]}{int(self.input_file[-1:])}'
-
-            logger.info(
-                f"{CGREEN} Save as:{RESET} {BWHITE}{fname}{RESET}")
+            logger.info(f"{CGREEN}Saved as:{RESET} {BWHITE}{output_file}{RESET}")
             status = False
 
         except KeyboardInterrupt:
             print("\nQuit!")
             sys.exit(1)
 
-        except BaseException as e:
-            print(f"{RED}{e}{RESET}")
-
         except Exception as e:
-            print(f"{BWHITE}{e}{RESET}")
+            print(f"{RED}Decryption failed: {e}{RESET}")
 
-        # and (not os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}')):
-        if status is True:
+        # Post-decryption cleanup
+        self.decClean(encrypted_path, status)
+
+        return output_file if not status else None
+
+    def decClean(self, encrypted_path, status):
+        if not status:
+            try:
+                os.remove(encrypted_path)
+                print(
+                    f"{FMAGENTA}Deleted encrypted: {BWHITE}{encrypted_path} 🚮{RESET}"
+                )
+            except Exception as e:
+                logger.warning(f"Could not delete {encrypted_path}: {e}")
+        else:
             print(f"{RED}Decryption failure.{RESET}")
-
-        elif status is False and (os.path.exists(_path_[:-1] + f'{0}') or os.path.exists(_path_[:-1] + f'{1}') or os.path.exists(_path_[:-1] + f'{2}')):
-            print(f"{FMAGENTA}Delete {BWHITE}{_path_}🚮{RESET}")
-            os.remove(_path_)
 
 
 class HandleFolders:
@@ -148,9 +201,7 @@ class HandleFolders:
         try:
             # Iterate over all files in the folder
             for root, dirs, files in os.walk(self.folder):
-
                 for file in files:
-
                     input_file = os.path.join(root, file)
 
                     print(f"{DBLUE}Encrypt{MAGENTA} {file}{RESET}")
@@ -163,20 +214,17 @@ class HandleFolders:
             sys.exit(1)
 
         except Exception as e:
+            raise
             print(f"Sorry:: {BWHITE}{e}{RESET}")
 
     def decrypt_folder(self):
         try:
             # Iterate over all files in the folder
             for root, dirs, files in os.walk(self.folder):
-
                 for file in files:
-
                     if file[-4:-1] == "enc":
-
                         input_file = os.path.join(root, file)
-                        print(
-                            f"{DCYAN}Decrypt {MAGENTA}{file}{RESET}", end='\n')
+                        print(f"{DCYAN}Decrypt {MAGENTA}{file}{RESET}", end="\n")
 
                         init = HandleFiles(input_file, self.passphrase)
                         init.decrypt_file()
@@ -185,7 +233,8 @@ class HandleFolders:
 
                     if os.path.isfile(input_file) and input_file[-4:-1] != "enc":
                         print(
-                            f"{BWHITE}The file {CYAN}{input_file}{RESET}{BWHITE} doesn't appear to be encrypted{RESET}")
+                            f"{BWHITE}The file {CYAN}{input_file}{RESET}{BWHITE} doesn't appear to be encrypted{RESET}"
+                        )
                         pass
         except KeyboardInterrupt:
             print("\nExiting")
@@ -196,5 +245,5 @@ class HandleFolders:
 
 
 if __name__ == "__main__":
-    init = HandleFiles('test.docx', 'skye')
+    init = HandleFiles("test.docx", "skye")
     init.encrypt_file()
