@@ -1,5 +1,5 @@
 from setuptools import setup
-
+from
 DESCRIPTION = "CLI tool for encrypting and decrypting files and folders"
 EXCLUDE_FROM_PACKAGES = ["build", "dist", "test", "src"]
 

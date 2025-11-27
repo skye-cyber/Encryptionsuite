@@ -145,7 +145,7 @@ class HandleFiles:
             # Match pattern: filename.ext.encN
             if filename[-1:].isdigit() and filename[-5:-1] == ".enc":
                 level = int(filename[-1:])
-                base_name = filename[:-6]
+                base_name = filename[:-5]
             else:
                 print(f"{RED}Invalid encrypted file name format.{RESET}")
                 return None
