@@ -15,7 +15,7 @@ setup(
         "console_scripts": [
             "Encryptionsuite=Encryptionsuite:main",
             "encryptionsuite=Encryptionsuite:main",
-            "ENCRYPTIONSUITE=Encryptionsuite:main",
+            "encryptor=Encryptionsuite:main",
         ],
     },
     python_requires=">=3.0",
